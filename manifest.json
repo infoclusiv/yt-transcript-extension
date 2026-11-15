@@ -1,0 +1,62 @@
+{
+  "action": {
+    "default_icon": {
+      "128": "images/icon128.png",
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "__MSG_copyTranscript__"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "shared/formatting.js",
+        "shared/clipboard.js",
+        "shared/analytics-client.js",
+        "shared/caption-language.js",
+        "content.js",
+        "home-menu/home-menu.js"
+      ],
+      "matches": [
+        "https://www.youtube.com/watch*",
+        "https://www.youtube.com/shorts*",
+        "*://*.youtube.com/*"
+      ],
+      "run_at": "document_idle",
+      "css": [
+        "home-menu/home-menu.css"
+      ]
+    }
+  ],
+  "default_locale": "en",
+  "description": "__MSG_extensionDescription__",
+  "host_permissions": [
+    "https://www.youtube.com/*"
+  ],
+  "icons": {
+    "128": "images/icon128.png",
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png"
+  },
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "sidePanel",
+    "alarms",
+    "tabs",
+    "clipboardWrite"
+  ],
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
+  "version": "1.7.10"
+}

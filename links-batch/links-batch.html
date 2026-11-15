@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Transcripciones por enlaces · YouTube Transcript</title>
+<link rel="stylesheet" href="../channel-batch/channel-batch.css">
+<link rel="stylesheet" href="links-batch.css">
+</head>
+<body>
+<main class="shell">
+  <header class="topbar"><div class="brand"><img src="../images/icon48.png" width="34" height="34" alt=""><div><b>YouTube Transcript</b><small>Extracción masiva</small></div></div><nav class="mode-nav" aria-label="Modalidad"><a href="../channel-batch/channel-batch.html">Por canal</a><a class="mode-active" href="links-batch.html">Por enlaces</a><a href="../watch-later/watch-later.html">Watch Later</a></nav></header>
+  <section class="intro"><div class="kicker">BATCH MANAGER / ENLACES</div><h1>Todos tus enlaces. Una sola descarga.</h1><p>Pega uno o varios enlaces de YouTube, incluso de diferentes canales. Añádelos a una lista y obtén las transcripciones disponibles sin abrir cada video manualmente.</p></section>
+
+  <section class="panel setup" aria-labelledby="setupTitle"><div class="section-title"><h2 id="setupTitle">01 · Preparar lista de videos</h2><span>Sin buscar ni explorar canales</span></div>
+    <label for="linksInput">Enlaces de YouTube</label>
+    <textarea id="linksInput" spellcheck="false" rows="6" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ&#10;https://youtu.be/aqz-KE-bpKQ&#10;https://www.youtube.com/shorts/XXXXXXXXXXX" aria-describedby="linksHelp"></textarea>
+    <p class="field-help" id="linksHelp">Un enlace por línea, o varios separados por espacios o comas. Admite videos, Shorts y enlaces de transmisiones guardadas. Puedes añadir más enlaces a la misma lista en cualquier momento.</p>
+    <div class="form-actions"><button id="addBtn" class="secondary" type="button">+ Añadir a la lista</button><label class="delay-option" for="linkDelay">Pausa entre videos <select id="linkDelay"><option value="3000">3 segundos</option><option value="5000" selected>5 segundos</option><option value="10000">10 segundos</option></select></label><button id="startLinksBtn" class="primary" type="button">Extraer todas las transcripciones</button></div>
+    <div class="history-row"><label for="savedLists">Listas anteriores</label><select id="savedLists"><option value="">Seleccionar lista...</option></select><button id="newListBtn" type="button" class="ghost">Nueva lista</button></div>
+  </section>
+
+  <section class="panel" aria-labelledby="progressTitle"><div class="section-title"><h2 id="progressTitle">02 · Estado de la extracción</h2><span id="linkJobStatus" class="status-pill">Preparado</span></div>
+    <div class="stats"><div><b id="totalCount">0</b><span>Enlaces en la lista</span></div><div><b id="doneCount">0</b><span>Transcritos</span></div><div><b id="failedCount">0</b><span>Sin subtítulos / errores</span></div><div><b id="pendingCount">0</b><span>Pendientes</span></div></div>
+    <div class="progressbar" role="progressbar" aria-label="Progreso de la lista" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressbar"><div id="progressFill"></div></div>
+    <div class="progressfoot"><span id="progressText">Añade los enlaces que quieras procesar.</span><span id="percent">0%</span></div>
+    <div class="notice" id="notice" role="status" aria-live="polite">Los resultados se guardan localmente. Mantén esta pestaña abierta durante la extracción.</div>
+    <div class="actions"><button id="pauseBtn" class="secondary" type="button" disabled>Pausar</button><button id="resumeBtn" class="primary" type="button" disabled>Continuar pendientes</button><button id="retryBtn" class="ghost" type="button" disabled>Reintentar errores</button><span id="currentVideo" class="right-note">—</span></div>
+  </section>
+
+  <section class="panel" aria-labelledby="listTitle"><div class="section-title"><h2 id="listTitle">03 · Videos de la lista</h2><span id="visibleCount">0 videos</span></div>
+    <div class="listcontrols"><input id="videoSearch" type="search" placeholder="Buscar por título o ID..."><select id="filterStatus"><option value="all">Todos los estados</option><option value="done">Completados</option><option value="pending">Pendientes</option><option value="failed">Sin subtítulos / errores</option></select></div>
+    <div class="tablewrap"><table><thead><tr><th>Video</th><th>Tipo</th><th>Estado</th><th>Palabras</th><th aria-label="Acciones"></th></tr></thead><tbody id="videoTable"><tr><td colspan="5" class="empty">Todavía no hay enlaces.</td></tr></tbody></table></div>
+    <div class="listfooter"><span id="listLimit">Mostrando hasta 100 resultados.</span><button id="moreBtn" class="ghost" type="button" hidden>Mostrar más</button></div>
+  </section>
+  <section class="panel exportpanel"><div><h2>04 · Descargar transcripciones</h2><p>Todos los TXT en un ZIP, con índice CSV y reporte de videos sin transcripción. También puedes exportar JSONL para análisis con IA.</p></div><div class="exportactions"><button id="zipBtn" class="primary" type="button" disabled>Descargar ZIP de todas</button><button id="jsonlBtn" class="secondary" type="button" disabled>Descargar JSONL</button></div></section>
+  <footer>Funciona únicamente si YouTube ofrece subtítulos accesibles para el video. No genera subtítulos a partir del audio. Los videos privados, restringidos o sin subtítulos pueden fallar.</footer>
+</main>
+<script src="../channel-batch/db.js"></script><script src="../channel-batch/export.js"></script><script src="../channel-batch/transcript-worker.js"></script><script src="parse-links.js"></script><script src="links-batch.js"></script>
+</body>
+</html>

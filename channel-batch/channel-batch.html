@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Extracción masiva · YouTube Transcripts</title>
+<link rel="stylesheet" href="channel-batch.css">
+</head>
+<body>
+<main class="shell">
+  <header class="topbar"><div class="brand"><img src="../images/icon48.png" width="34" height="34" alt=""><div><b>YouTube Transcript</b><small>Extracción masiva</small></div></div><nav class="mode-nav" aria-label="Modalidad"><a class="mode-active" href="channel-batch.html">Por canal</a><a href="../links-batch/links-batch.html">Por enlaces</a><a href="../watch-later/watch-later.html">Watch Later</a></nav></header>
+  <section class="intro"><div class="kicker">BATCH MANAGER</div><h1>Transcribe un canal completo.</h1><p>Introduce un canal. La extensión buscará un grupo de videos, extraerá sus transcripciones una por una y después buscará el siguiente grupo. Puedes pausar y retomar cuando quieras.</p></section>
+  <section class="panel setup" aria-labelledby="setupTitle"><div class="section-title"><h2 id="setupTitle">01 · Configurar canal</h2><span>La extracción usa tu navegador</span></div>
+    <form id="channelForm">
+      <label for="channelUrl">URL del canal o @usuario</label>
+      <div class="input-row"><input id="channelUrl" type="text" spellcheck="false" placeholder="https://www.youtube.com/@nombre-del-canal" required autocomplete="off"><button class="primary" id="startBtn" type="submit">Iniciar extracción</button></div>
+      <div class="options">
+        <fieldset><legend>Contenido</legend><label class="option"><input id="videos" type="checkbox" checked> Videos</label><label class="option"><input id="shorts" type="checkbox" checked> Shorts</label><label class="option"><input id="streams" type="checkbox" checked> Directos archivados</label></fieldset>
+        <div><label for="batchSize">Cantidad por sesión</label><select id="batchSize"><option value="0">Todo el canal</option><option value="25">Lotes de 25</option><option value="50">Lotes de 50</option><option value="100">Lotes de 100</option></select></div>
+        <div><label for="delayMs">Pausa entre videos</label><select id="delayMs"><option value="3000">3 segundos</option><option value="5000" selected>5 segundos (recomendado)</option><option value="10000">10 segundos</option></select></div>
+      </div>
+    </form>
+    <p class="hint-scan">Si ya procesaste un primer grupo, usa <strong>Continuar canal completo</strong>: buscará las páginas siguientes sin repetir los videos guardados. La exploración puede abrir temporalmente una pestaña de YouTube.</p><div class="history-row"><label for="previousJobs">Canales guardados</label><select id="previousJobs"><option value="">Seleccionar canal anterior...</option></select><button class="ghost" id="rescanBtn" type="button" disabled>Buscar videos nuevos</button></div>
+  </section>
+  <section class="panel" aria-labelledby="progressTitle"><div class="section-title"><h2 id="progressTitle">02 · Progreso</h2><span id="jobStatus" class="status-pill">Sin iniciar</span></div>
+    <div class="stats"><div><b id="totalCount">0</b><span>Videos encontrados</span></div><div><b id="doneCount">0</b><span>Transcritos</span></div><div><b id="failedCount">0</b><span>Sin transcripción / errores</span></div><div><b id="pendingCount">0</b><span>Pendientes</span></div></div>
+    <div class="progressbar" role="progressbar" aria-label="Progreso de extracción" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressbar"><div id="progressFill"></div></div><div class="progressfoot"><span id="progressText">Ningún canal cargado</span><span id="percent">0%</span></div>
+    <div id="notice" class="notice" role="status" aria-live="polite">Las transcripciones se almacenan en el navegador hasta que las exportes. Mantén esta pestaña abierta durante el proceso.</div>
+    <details class="diagnostics"><summary>Diagnóstico técnico de solicitudes y errores</summary><p>Se registra por separado la búsqueda del canal y la extracción de cada video. Se conserva un máximo de 120 eventos recientes; no se guardan claves de API.</p><pre id="diagnosticLog">Sin diagnóstico.</pre><button id="copyDiagnostics" type="button" class="ghost">Copiar diagnóstico</button></details>
+    <div class="actions"><button id="pauseBtn" type="button" class="secondary" disabled>Pausar</button><button id="resumeBtn" type="button" class="primary" disabled>Continuar canal completo</button><button id="retryBtn" type="button" class="ghost" disabled>Reintentar errores</button><span class="right-note" id="currentVideo">—</span></div>
+  </section>
+  <section class="panel" aria-labelledby="listTitle"><div class="section-title"><h2 id="listTitle">03 · Videos procesados</h2><span id="visibleCount">0 videos</span></div>
+    <div class="listcontrols"><input id="videoSearch" type="search" placeholder="Buscar por título o ID..."><select id="filterStatus"><option value="all">Todos los estados</option><option value="done">Completados</option><option value="pending">Pendientes</option><option value="failed">Errores</option></select></div>
+    <div class="tablewrap"><table><thead><tr><th>Video</th><th>Tipo</th><th>Estado</th><th>Palabras</th></tr></thead><tbody id="videoTable"><tr><td colspan="4" class="empty">Todavía no hay videos.</td></tr></tbody></table></div>
+    <div class="listfooter"><span id="listLimit">Se muestran hasta 100 resultados por vista.</span><button id="moreBtn" type="button" class="ghost" hidden>Mostrar más</button></div>
+  </section>
+  <section class="panel exportpanel"><div><h2>04 · Exportar resultados</h2><p>ZIP incluye un archivo TXT por video, índice CSV y listado de errores. JSONL es útil para análisis de datos e IA.</p></div><div class="exportactions"><select id="exportRange" aria-label="Alcance de ZIP"><option value="all">Todos los completados</option><option value="last100">Últimos 100 completados</option></select><button id="zipBtn" type="button" class="primary" disabled>Descargar ZIP</button><button id="jsonlBtn" type="button" class="secondary" disabled>Descargar JSONL</button></div></section>
+  <footer>Funciona con videos públicos y subtítulos disponibles. Los contenidos privados, restringidos o sin subtítulos pueden fallar. No incluye transcripción por reconocimiento de audio.</footer>
+</main>
+<script src="discovery.js"></script><script src="dom-discovery.js"></script><script src="db.js"></script><script src="export.js"></script><script src="transcript-worker.js"></script><script src="channel-batch.js"></script>
+</body>
+</html>
