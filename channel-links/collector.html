@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recopilar enlaces · YouTube Transcript</title>
+<link rel="stylesheet" href="../channel-batch/channel-batch.css">
+<link rel="stylesheet" href="collector.css">
+</head>
+<body>
+<main class="shell">
+  <header class="topbar"><div class="brand"><img src="../images/icon48.png" width="34" height="34" alt=""><div><b>YouTube Transcript</b><small>Gestor de enlaces</small></div></div>
+    <nav class="mode-nav" aria-label="Modalidad"><a href="../channel-batch/channel-batch.html">Por canal</a><a href="../links-batch/links-batch.html">Por enlaces</a><a href="../watch-later/watch-later.html">Watch Later</a><a class="mode-active" href="collector.html">Recopilar enlaces</a></nav></header>
+  <section class="intro"><div class="kicker">CHANNEL LINK COLLECTOR</div><h1>Investiga un canal, elige tus videos.</h1><p>Recopila enlaces de la pestaña Videos de un canal, revisa sus títulos y cópialos en lotes para NotebookLM. Sin descargar transcripciones ni usar APIs de pago.</p></section>
+  <section class="panel"><div class="section-title"><h2>01 · Canal de origen</h2><span>Se utiliza una pestaña abierta de YouTube</span></div>
+    <div class="controls"><label class="grow">Pestaña Videos del canal<select id="sourceTab" aria-label="Pestaña de YouTube"></select></label><button id="refreshTabs" class="ghost">Actualizar pestañas</button><button id="goToSource" class="secondary">Ir al canal</button></div>
+    <div class="notice" id="notice" role="status" aria-live="polite">Abre la pestaña Videos de un canal y elige esa pestaña.</div>
+  </section>
+  <section class="panel"><div class="section-title"><h2>02 · Recopilación y filtros</h2><span>La antigüedad es aproximada cuando YouTube muestra fechas relativas</span></div>
+    <div class="controls">
+      <label>Antigüedad<select id="ageFilter"><option value="all">Todos</option><option value="7">7 días</option><option value="30">30 días</option><option value="90">3 meses</option><option value="180">6 meses</option><option value="365" selected>1 año</option><option value="730">2 años</option><option value="custom">Personalizado</option></select></label>
+      <label id="customDaysWrap" hidden>Máximo de días<input id="customDays" type="number" min="1" value="365"></label>
+      <label>Máximo de videos (0 = sin límite)<input id="maxVideos" type="number" min="0" value="0"></label>
+      <label class="checkbox"><input id="includeUnknown" type="checkbox"> Incluir fechas desconocidas</label>
+    </div>
+    <div class="controls scan-actions"><button id="scanAll" class="primary">Recopilar canal</button><button id="scanVisible" class="secondary">Solo visibles</button><button id="cancelScan" class="ghost" disabled>Cancelar</button><button id="clearResults" class="ghost">Limpiar canal</button></div>
+    <p class="hint-scan" id="scanDetail">El escaneo hace scroll en YouTube; mantén la pestaña abierta. Si YouTube no carga más videos, el resultado puede quedar incompleto.</p>
+  </section>
+  <div class="stats collector-stats"><div><b id="foundCount">0</b><span>Recopilados</span></div><div><b id="filteredCount">0</b><span>Con filtro</span></div><div><b id="selectedCount">0</b><span>Seleccionados</span></div><div><b id="batchCount">0</b><span>Lotes</span></div></div>
+  <div class="collector-layout">
+    <section class="panel"><div class="section-title"><h2>03 · Revisar videos</h2><span id="visibleCount">0 videos</span></div>
+      <div class="controls"><label class="grow">Buscar por título o ID<input id="titleSearch" type="search" placeholder="Ej. análisis, resumen, estrategia…"></label><label class="checkbox"><input id="showExcluded" type="checkbox" checked> Mostrar excluidos</label></div>
+      <div class="controls"><button id="selectVisible" class="ghost">Seleccionar visibles</button><button id="excludeVisible" class="ghost">Quitar visibles</button></div>
+      <div id="videoList" class="video-list"><p class="empty">Todavía no hay videos.</p></div>
+      <div class="listfooter"><span id="listLimit">Hasta 100 resultados mostrados</span><button id="moreVideos" class="ghost" hidden>Mostrar más</button></div>
+    </section>
+    <aside class="panel batch-panel"><div class="section-title"><h2>04 · Lotes para NotebookLM</h2></div>
+      <label>Tamaño del lote (máximo 50)<input id="batchSize" type="number" min="1" max="50" value="50"></label>
+      <div id="batchTabs" class="batch-tabs"></div><div id="batchInfo" class="notice">Sin lotes.</div>
+      <div id="batchPreview" class="batch-preview"></div>
+      <div class="batch-actions"><button id="copyBatch" class="primary" disabled>Copiar este lote</button><button id="copyNext" class="secondary" disabled>Copiar y siguiente</button><div class="controls"><button id="previousBatch" class="ghost" disabled>Anterior</button><button id="nextBatch" class="ghost" disabled>Siguiente</button></div><button id="resetCopied" class="ghost" disabled>Reiniciar marcas de copiado</button></div>
+      <p class="hint-scan">Una URL por línea. Copiado no significa que NotebookLM haya importado los videos.</p>
+    </aside>
+  </div>
+  <footer>Los resultados y selecciones se guardan localmente por canal. La recopilación visual depende de la interfaz de YouTube.</footer>
+</main>
+<script src="collector.js"></script>
+</body></html>
