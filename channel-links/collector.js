@@ -171,7 +171,7 @@
     try {
       const response=await send({type:all?'YTCL_ALL':'YTCL_VISIBLE',options:{
         maxVideos:Number($('maxVideos').value)||0,restoreScroll:true}});
-      if(!response?.ok)throw new Error(response?.error||'No se pudieron recopilar los enlaces.');
+      if(!response?.ok && !(response?.videos?.length))throw new Error(response?.error||'No se pudieron recopilar los enlaces.');
       const collected=new Map(videos.map(v=>[v.videoId,v]));
       for(const video of response.videos||[]) {
         if(!collected.has(video.videoId))collected.set(video.videoId,video);
@@ -185,11 +185,11 @@
       }
       videos=[...collected.values()];
       await save();render();
-      const uncertain=all && !response.completed && !response.truncated && !response.cancelled;
+      const uncertain=all && !response.completed && !response.truncated && !response.cancelled || !response.ok;
       status(videos.length+' videos guardados para este canal. '+
         (response.cancelled?'Escaneo cancelado; se conservaron los encontrados.':
         response.truncated?'Se alcanzó el máximo configurado.':
-        uncertain?'YouTube no confirmó el final; el listado puede estar incompleto.':
+        uncertain?'El escaneo no confirmó el final o se interrumpió; el listado puede estar incompleto.':
         all?'El recorrido llegó al final visible de la página (no garantiza un catálogo exhaustivo).':'Solo se recopilaron los videos visibles.'),uncertain);
     } finally {setBusy(false);}
   }
