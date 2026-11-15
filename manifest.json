@@ -1,10 +1,10 @@
 {
   "action": {
     "default_icon": {
-      "128": "images/icon128.png",
       "16": "images/icon16.png",
       "32": "images/icon32.png",
-      "48": "images/icon48.png"
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
     },
     "default_popup": "popup.html",
     "default_title": "__MSG_copyTranscript__"
@@ -20,7 +20,8 @@
         "shared/analytics-client.js",
         "shared/caption-language.js",
         "content.js",
-        "home-menu/home-menu.js"
+        "home-menu/home-menu.js",
+        "channel-links/scanner.js"
       ],
       "matches": [
         "https://www.youtube.com/watch*",
@@ -39,10 +40,10 @@
     "https://www.youtube.com/*"
   ],
   "icons": {
-    "128": "images/icon128.png",
     "16": "images/icon16.png",
     "32": "images/icon32.png",
-    "48": "images/icon48.png"
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
   },
   "manifest_version": 3,
   "name": "__MSG_extensionName__",
@@ -58,5 +59,5 @@
   "side_panel": {
     "default_path": "sidepanel/sidepanel.html"
   },
-  "version": "1.7.10"
+  "version": "1.7.11"
 }
